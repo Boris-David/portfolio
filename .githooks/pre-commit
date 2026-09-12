@@ -45,7 +45,11 @@ while IFS= read -r file; do
   [ -f "$file" ] || continue
   case "$file" in .githooks/pre-commit) continue ;; esac
   for pattern in "${PATTERNS[@]}"; do
-    if git show ":$file" 2>/dev/null | grep -nEq "$pattern"; then
+    # `-e` : un motif qui commence par « - » serait sinon lu comme des
+    # options par grep, qui échouerait — et un échec de grep se confond avec
+    # « rien trouvé ». Panne muette mesurée le 2026-09-13, gardée par
+    # .githooks/__tests__/run.sh
+    if git show ":$file" 2>/dev/null | grep -Eq -e "$pattern"; then
       echo "${RED}✖ Commit refusé — marqueur interdit dans un dépôt public.${NC}" >&2
       echo "  fichier : $file" >&2
       echo "  motif   : $pattern" >&2
