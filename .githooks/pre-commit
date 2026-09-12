@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+#
+# Garde d'identité et de fuite — dépôt PUBLIC.
+#
+# Deux invariants, tenus par la machine et non par la vigilance :
+#   1. l'auteur du commit est l'identité personnelle du portfolio ;
+#   2. aucun contenu indexé ne porte de marqueur d'employeur ni de secret.
+#
+# Activé par `git config core.hooksPath .githooks`, donc VERSIONNÉ : il
+# survit à un clone, contrairement à un `includeIf` qui dépend du chemin
+# de la machine.
+set -euo pipefail
+
+EXPECTED_EMAIL="amissan.ag@outlook.fr"
+RED=$'\033[0;31m'; NC=$'\033[0m'
+
+# ── 1. Identité ───────────────────────────────────────────────────────
+actual_email="$(git config user.email || echo '')"
+if [ "$actual_email" != "$EXPECTED_EMAIL" ]; then
+  echo "${RED}✖ Commit refusé — mauvaise identité.${NC}" >&2
+  echo "  attendu : $EXPECTED_EMAIL" >&2
+  echo "  trouvé  : ${actual_email:-<vide>}" >&2
+  echo "  corriger : git config user.email $EXPECTED_EMAIL" >&2
+  exit 1
+fi
+
+# ── 2. Fuite dans le contenu indexé ───────────────────────────────────
+# Ce dépôt est public. Un marqueur d'employeur ou une valeur de secret
+# indexée est irréversible : une fois poussé, c'est dans l'historique.
+staged="$(git diff --cached --name-only --diff-filter=ACM)"
+[ -z "$staged" ] && exit 0
+
+declare -a PATTERNS=(
+  'instant-system\.com'
+  'inetum\.com'
+  '-----BEGIN [A-Z ]*PRIVATE KEY-----'
+  'ghp_[A-Za-z0-9]{36}'
+  'gho_[A-Za-z0-9]{36}'
+  'AIza[0-9A-Za-z_-]{35}'
+  'sk-[A-Za-z0-9]{20,}'
+)
+
+found=0
+while IFS= read -r file; do
+  [ -f "$file" ] || continue
+  case "$file" in .githooks/pre-commit) continue ;; esac
+  for pattern in "${PATTERNS[@]}"; do
+    if git show ":$file" 2>/dev/null | grep -nEq "$pattern"; then
+      echo "${RED}✖ Commit refusé — marqueur interdit dans un dépôt public.${NC}" >&2
+      echo "  fichier : $file" >&2
+      echo "  motif   : $pattern" >&2
+      found=1
+    fi
+  done
+done <<< "$staged"
+
+[ "$found" -eq 0 ] || exit 1
+exit 0

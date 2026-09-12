@@ -1,0 +1,15 @@
+# Matière personnelle brute — JAMAIS dans un dépôt public
+# (le CV source porte téléphone et adresse postale)
+_private/
+
+# Dépôts produits, versionnés chacun de leur côté
+/web/
+/ios/
+/api/
+
+# macOS
+.DS_Store
+
+# Outillage local
+.claude/settings.local.json
+node_modules/
