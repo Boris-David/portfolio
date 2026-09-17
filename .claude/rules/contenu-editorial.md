@@ -48,13 +48,32 @@ dans le même écran. « Référent technique billettique » reste juste comme
   application, dont il est l'**expert**, et il porte le lancement du m-ticket.
 - **Nouveau socle (Oùra, Toscane)** : catalogue d'achat, panier, produits à
   paramètres, historiques d'achat, gestion de bénéficiaires, achat pour autrui.
-- **Bibliothèque anti-fraude** — masque le contenu de l'écran lors d'une capture
-  ou d'un enregistrement. **Née d'une initiative personnelle** en première année,
-  dans un cadre d'innovation, et **reprise ensuite sur le nouveau socle**.
+- **Bibliothèque anti-fraude** — le problème : les fraudeurs capturaient le QR
+  code d'un titre et le transmettaient, et rien ne distinguait la copie au
+  contrôle. **Née d'une initiative personnelle** en sprint d'innovation, elle
+  masque le contenu de l'écran dès qu'une capture est en cours. Déployée partout,
+  **reprise sur le nouveau socle**, et devenue une **fonctionnalité que les
+  clients paient**.
 - **Bibliothèque de génération de QR code** à partir d'un payload encodé — la
   brique Usage : validation du titre et contrôle.
-- **Modules d'abstraction par prestataire** : il en est à l'initiative.
-- **Refonte de la gestion de session** avec acteurs et `async/await`.
+- **Architecture d'abstraction par prestataire** : ⚠️ **il n'en est PAS à
+  l'initiative — c'est le tech lead.** Ce qui est à lui : avoir **créé le module
+  d'un nouveau prestataire** malgré son peu de spécificités, pour que
+  l'architecture reste cohérente de bout en bout ; et avoir **milité pour, puis
+  obtenu**, la remontée au niveau du produit des implémentations indépendantes du
+  prestataire, les prestataires ne surchargeant plus que leur différence.
+  *(Correction apportée par l'auteur lui-même le 2026-09-17. Une revendication
+  trop large se retourne en entretien — ne jamais la réintroduire.)*
+- **Refonte de l'authentification** : le code datait de 2019 et personne ne
+  voulait y toucher. Plusieurs requêtes recevant un 401 simultanément lançaient
+  chacune leur rafraîchissement de jeton ; les rafraîchissements concurrents
+  s'invalidaient et **déconnectaient l'utilisateur sans raison**. Il a pris
+  l'initiative de la refonte : acteur portant l'état d'authentification, et
+  **mémorisation de la tâche de rafraîchissement en cours** — les appels
+  concurrents attendent la même au lieu d'en créer une nouvelle. **Résultat :
+  l'authentification sur TCL est devenue nettement plus stable.**
+  *(Vérifiable dans le code : `ISAuthenticationManager`, cinq commits de
+  février 2025.)*
 - Deux outils écrits pour son équipe, **repris par une autre équipe produit**.
 
 ## 🔴 Ce qui ne sort jamais
