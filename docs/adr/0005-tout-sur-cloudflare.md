@@ -34,6 +34,13 @@ contenu fusionnée dans `portfolio-api` déclenche son déploiement, qui déclen
 son tour la reconstruction et le redéploiement de `portfolio-web`. Délai bout en
 bout : **une à deux minutes, sans aucune action humaine**.
 
+> ⚠️ **Ce paragraphe décrivait une intention, pas un état.** Au moment où il a
+> été écrit, aucun des deux déploiements ne se déclenchait autrement qu'à la
+> main, et la propagation entre dépôts n'existait pas. Le 2026-09-18,
+> [l'ADR 0006](0006-le-deploiement-suit-la-ci.md) en a rendu la **première
+> moitié** vraie — fusionner sur `main` déploie. La seconde, le déclencheur
+> inter-dépôts et son témoin de fraîcheur, **reste à écrire**.
+
 ## Conséquences
 
 **Ce qu'on gagne.** Un seul fournisseur, un seul compte, aucune configuration
