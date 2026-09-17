@@ -1,0 +1,97 @@
+name: CI
+
+# Ce dépôt ne contient pas de code applicatif : il contient des **gardes** — un
+# hook de pre-commit qui refuse une mauvaise identité git ou un secret, et un
+# hook Claude qui refuse d'écrire hors du périmètre `portfolio`.
+#
+# Une garde qu'aucune CI n'exécute est une garde qui pourrit sans prévenir. Le
+# cas s'est produit ici : le motif de détection des clés privées commence par un
+# tiret, `grep` le lisait comme une option, échouait, et un échec de `grep` est
+# indiscernable de « rien trouvé ». La garde laissait passer des clés privées
+# **en silence**, et seul un test de mutation l'a révélé.
+#
+# D'où ce workflow : les suites qui gardent les gardes tournent à chaque
+# poussée, pas seulement quand quelqu'un pense à les lancer.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Aucun secret n'est nécessaire : rien ne se déploie depuis ce dépôt.
+permissions:
+  contents: read
+
+jobs:
+  gardes:
+    name: Les gardes tiennent
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      # Le hook de pre-commit refuse une identité git étrangère au compte
+      # personnel, et tout motif interdit dans le contenu indexé.
+      - name: Hook de pre-commit — identité et motifs interdits
+        run: bash .githooks/__tests__/run.sh
+
+      # Le hook de périmètre refuse à Claude d'écrire hors de `portfolio`, tout
+      # en laissant lire ce qu'il doit pouvoir lire. Les deux moitiés comptent :
+      # une garde qui refuse tout est aussi fausse qu'une garde qui laisse tout
+      # passer, et la suite porte ses témoins pour ça.
+      - name: Hook de périmètre — écriture refusée, lecture préservée
+        run: bash .claude/hooks/__tests__/scope_test.sh
+
+      # Un lien d'ADR qui ne résout plus est une décision devenue introuvable.
+      # Le coût de la vérification est nul, celui de la panne est une
+      # architecture qu'on ne peut plus justifier.
+      - name: Les liens entre ADR résolvent
+        run: |
+          casses=0
+          while IFS= read -r -d '' fichier; do
+            # Les liens relatifs entre documents markdown de `docs/adr/`.
+            grep -oE '\]\([0-9]{4}-[a-z0-9-]+\.md\)' "$fichier" 2>/dev/null \
+              | tr -d '](),' \
+              | while read -r cible; do
+                  [ -f "docs/adr/$cible" ] || echo "MANQUANT|$fichier|$cible"
+                done
+          done < <(find docs/adr -name '*.md' -print0) > /tmp/liens.txt
+
+          if [ -s /tmp/liens.txt ]; then
+            while IFS='|' read -r _ fichier cible; do
+              echo "::error file=$fichier::lien d'ADR cassé → $cible"
+            done < /tmp/liens.txt
+            casses=1
+          fi
+
+          # Chaque ADR présent doit figurer dans l'index, sinon il est écrit
+          # pour personne.
+          for adr in docs/adr/[0-9]*.md; do
+            base="$(basename "$adr")"
+            if ! grep -q "$base" docs/adr/README.md; then
+              echo "::error file=docs/adr/README.md::ADR absent de l'index → $base"
+              casses=1
+            fi
+          done
+
+          [ "$casses" -eq 0 ] && echo "ADR : liens et index cohérents."
+          exit "$casses"
+
+      # `design/tokens.json` est la source dont dérivent le CSS du site et, plus
+      # tard, le paquet Swift. Un JSON invalide casserait les deux à distance,
+      # sans que ce dépôt ne s'en aperçoive.
+      - name: Les tokens de design sont un JSON valide
+        run: |
+          python3 -c "
+          import json, sys
+          with open('design/tokens.json', encoding='utf-8') as f:
+              tokens = json.load(f)
+          for cle in ('color', 'font', 'space', 'radius', 'ease'):
+              if cle not in tokens:
+                  sys.exit(f'groupe de tokens manquant : {cle}')
+          print(f'tokens valides — {len(tokens)} groupes.')
+          "
