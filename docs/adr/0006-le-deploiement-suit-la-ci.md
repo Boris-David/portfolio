@@ -116,12 +116,9 @@ pour chacun des deux dépôts.
 deux pièges sont réels. Ils sont commentés à l'endroit exact où ils s'appliquent,
 dans les deux fichiers.
 
-**Ce qui reste ouvert, et qui est la dernière panne silencieuse de la chaîne.**
-La propagation **entre dépôts** n'existe toujours pas. Une modification de
-contenu fusionnée dans `portfolio-api` déploie l'API, et le site continue de
-servir son contenu local. La seconde moitié de la phrase de l'ADR 0005 reste donc
-à écrire :
-
-1. un déclencheur inter-dépôts (`repository_dispatch` de l'API vers le web) ;
-2. un **témoin de fraîcheur** — sans lui, on remplace une panne silencieuse par
-   une autre, et ce document aura été écrit pour rien.
+**Ce qui restait ouvert — et qui est fermé depuis.** La propagation **entre
+dépôts** n'existait pas : une modification de contenu fusionnée dans
+`portfolio-api` déployait l'API, et le site continuait de servir sa propre copie.
+[L'ADR 0007](0007-propagation-du-contenu-entre-depots.md), du 2026-09-18, l'a
+écrite — déclencheur inter-dépôts **et** témoin de fraîcheur, ce dernier étant
+la moitié sans laquelle on aurait remplacé une panne silencieuse par une autre.

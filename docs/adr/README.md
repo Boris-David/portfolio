@@ -18,3 +18,4 @@ un choix sans connaître la contrainte qui l'avait imposé.
 | [0004](0004-le-cv-est-genere-par-l-api.md) | Le CV en PDF est généré par l'API, pas par chaque client | Accepté |
 | [0005](0005-tout-sur-cloudflare.md) | Tout sur Cloudflare, contenu propagé par reconstruction | Accepté |
 | [0006](0006-le-deploiement-suit-la-ci.md) | Le déploiement suit la CI, il ne court pas à côté d'elle | Accepté |
+| [0007](0007-propagation-du-contenu-entre-depots.md) | La propagation du contenu entre dépôts, poussée et tirée | Accepté |
