@@ -11,7 +11,8 @@ set -uo pipefail
 HOOK="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/guard-repo-scope.sh"
 HOME_WORK="/Users/PC205/$(printf 'Work')"
 WS="$HOME_WORK/learning/ai-projects/portfolio"
-SIB="$HOME_WORK/learning/ai-$(printf 'projects')/kcalories"
+SIB="$HOME_WORK/learning/ai-$(printf 'projects')/un-autre-projet"
+CITED="$HOME_WORK/learning/ai-$(printf 'projects')/kcalories"
 OUT_REPO="Boris-David/$(printf 'autre')-projet"
 pass=0; fail=0
 
@@ -33,9 +34,14 @@ tf() { # même chose, mais pour un outil d'ÉCRITURE de fichier (Write/Edit)
 
 echo "── Garde de périmètre ──"
 
-echo "  · projet voisin sous ai-projects — interdit, lecture comprise"
+echo "  · projet voisin NON cité — fermé, lecture comprise"
 t "voisin : lecture"          "cat $SIB/CLAUDE.md"                        REFUS
 t "voisin : suppression"      "rm -rf $SIB"                               REFUS
+echo "  · projet voisin CITÉ par le portfolio — lecture seule"
+t "cité : git log"            "git -C $CITED log --oneline"               PASSE
+t "cité : lecture fichier"    "cat $CITED/README.md"                      PASSE
+t "cité : suppression"        "rm -rf $CITED/build"                       REFUS
+t "cité : commit"             "git -C $CITED commit -m x"                 REFUS
 
 echo "  · autre dépôt de travail — lecture autorisée, écriture jamais"
 t "travail : git log"         "git -C $HOME_WORK/socle-v1 log --oneline"  PASSE
@@ -55,6 +61,8 @@ tf "Write : projet voisin"    Write "$SIB/note.md"                        REFUS
 tf "Write : autre dépôt"      Write "$HOME_WORK/socle-v1/note.md"         REFUS
 tf "Edit : autre dépôt"       Edit  "$HOME_WORK/socle-v2/Package.swift"   REFUS
 tf "Write : dans le workspace" Write "$WS/design/tokens.json"             PASSE
+tf "Write : scratchpad de session" Write "/private/tmp/claude-502/sess/x.html" PASSE
+tf "Write : /tmp"             Write "/tmp/brouillon.txt"                   PASSE
 
 echo "  · TÉMOINS — le workspace doit rester pleinement ouvert"
 t "workspace : mkdir"         "mkdir -p $WS/design"                       PASSE

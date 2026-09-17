@@ -55,7 +55,17 @@ Cette exception est **étroite**, et ce qu'elle ne couvre pas compte autant :
 | Copier leur setup, leurs règles, leur outillage | **interdit** — l'exception porte sur le *contenu*, jamais sur la *méthode* |
 | Publier du code, un nom de client ou un détail interne sans accord | **interdit** — ce qui est citable se décide avec l'auteur, pas par défaut |
 
-Les projets sous `ai-projects/` restent **entièrement fermés**, lecture comprise.
+### 3. Lire un projet voisin que le portfolio CITE
+
+Un projet voisin sous `ai-projects/` devient **lisible** — et lisible seulement —
+dès lors que le portfolio **le cite dans son contenu** : on ne peut pas présenter
+un projet honnêtement sans pouvoir en établir les faits (dates de démarrage,
+périmètre, volume). La liste vit dans la garde, variable `READABLE_SIBLINGS`.
+
+Tout le reste de `ai-projects/` demeure **entièrement fermé, lecture comprise**.
+Et pour un projet cité, la porte ne s'ouvre que dans un sens : **aucune écriture,
+et aucune reprise de son setup** — l'exception porte sur ce qu'il *est*, jamais
+sur la façon dont il *est fait*.
 
 ### Ce qui tient ces règles
 
