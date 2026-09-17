@@ -25,7 +25,7 @@ dans le même écran. « Référent technique billettique » reste juste comme
 ## Les chiffres publiables — et eux seuls
 
 - **33** applications de transport en production embarquent sa couche de billettique
-- **~1 M** d'utilisateurs sur Mail Orange
+- **~5 M** d'utilisateurs des applications auxquelles il a contribué
 - **> 99,8 %** de sessions sans crash sur KCalories
 - **6 ans** d'ingénierie iOS, depuis octobre 2020
 - **4 stacks / 5 mois** sur KCalories, de la première ligne à l'App Store
@@ -38,6 +38,31 @@ dans le même écran. « Référent technique billettique » reste juste comme
 - tout **nombre total de commits** — le volume ferait soupçonner du code généré
 - le **nombre d'utilisateurs de KCalories** — l'app est récente
 - « plus d'une vingtaine de réseaux » — le compte réel est établi et vérifié
+
+### Le « ~5 M » — sa portée exacte (arbitrage du 2026-09-16)
+
+Il s'écrit **« ~5 M d'utilisateurs des applications auxquelles j'ai contribué »**,
+et jamais autrement. Le périmètre est l'**ensemble** des applications où il a
+écrit des lignes de code, pas une seule d'entre elles.
+
+La version précédente, « ~1 M d'utilisateurs sur Mail Orange », est **retirée** :
+elle attribuait à un seul produit un chiffre qui décrit tout un portefeuille, et
+sous-estimait la portée réelle. *« Faire monter à 5 M le nombre d'utilisateurs
+qui utilisent au moins une app sur laquelle j'ai écrit des lignes de code ! Et ne
+plus mettre uniquement Mail Orange. »*
+
+⚠️ **Ouvert** : le chiffre doit rester défendable à l'oral. Tant qu'il n'est pas
+adossé à une source qu'il peut citer en entretien, il s'écrit avec son « ~ » et
+sa formulation de portée — jamais en « 5 M d'utilisateurs » sec, qui invite la
+question à laquelle il n'a pas encore la réponse.
+
+### Le « 33 » — vrai, mais à ne pas marteler
+
+Le chiffre reste juste et publiable. Ce qui a été refusé, c'est sa **répétition** :
+*« ce 33 là cité à plusieurs endroits, je ne suis pas sûr que ça intéresse
+fortement les recruteurs »* (2026-09-16). Il porte une fois, là où il installe
+l'échelle ; au-delà, il devient un tic de rédaction et occupe la place d'un fait
+qui, lui, n'a pas encore été dit.
 
 ## Ce qui se dit du travail chez Instant System
 

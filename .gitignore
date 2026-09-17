@@ -13,3 +13,9 @@ _private/
 # Outillage local
 .claude/settings.local.json
 node_modules/
+
+# Journal local du hook InstructionsLoaded : trace quelles règles se sont
+# réellement chargées, par session et par machine. Utile pour auditer le
+# scoping des `paths:`, sans aucune valeur partagée — et il contient des
+# chemins absolus locaux.
+.claude/instructions-loaded.log
