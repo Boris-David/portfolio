@@ -15,3 +15,4 @@ un choix sans connaître la contrainte qui l'avait imposé.
 | [0001](0001-quatre-depots.md) | Quatre dépôts plutôt qu'un monorepo | Accepté |
 | [0002](0002-source-unique-de-contenu.md) | Une source unique de contenu, servie par une API | Accepté |
 | [0003](0003-choix-des-stacks.md) | Choix des stacks web, API et iOS | Accepté |
+| [0004](0004-le-cv-est-genere-par-l-api.md) | Le CV en PDF est généré par l'API, pas par chaque client | Accepté |
