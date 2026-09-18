@@ -15,7 +15,7 @@
 | Métier, en une phrase | il développe la **billettique mobile** chez Instant System, et c'est son domaine d'expertise |
 | Localisation | Alpes-Maritimes |
 | Disponibilité | « Opportunités de télétravail complet et fréquent » |
-| Langues | français · anglais professionnel (TOEIC 840) |
+| Langues | français · anglais professionnel (**TOEIC 840**, confirmé le 2026-09-18) |
 | Contact | `amissan.ag@outlook.fr`, **seul canal** |
 
 ⚠️ Ne pas écrire « développeur confirmé » en accroche : ça contredit « senior »
@@ -55,6 +55,17 @@ plus mettre uniquement Mail Orange. »*
 adossé à une source qu'il peut citer en entretien, il s'écrit avec son « ~ » et
 sa formulation de portée — jamais en « 5 M d'utilisateurs » sec, qui invite la
 question à laquelle il n'a pas encore la réponse.
+
+### Les projets ouverts ne figurent pas sur le CV en PDF (arbitrage du 2026-09-18)
+
+*Advanced Calendar* et *News App* sont publiés **sur le site et dans
+l'application**, dans la section « Projets ouverts ». Ils ont été retirés du CV
+en PDF pour tenir en deux pages, et l'auteur a confirmé qu'ils y restent :
+*« on peut les garder en dehors pour l'instant (du pdf) »*.
+
+Ce n'est donc **pas un oubli** : ne pas les y réintroduire en croyant réparer
+quelque chose. Deux pages est la contrainte, et ce sont les deux entrées qui
+apportent le moins face à un portefeuille de 33 applications en production.
 
 ### Le « 33 » — vrai, mais à ne pas marteler
 
