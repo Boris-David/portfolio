@@ -67,6 +67,41 @@ Ce n'est donc **pas un oubli** : ne pas les y réintroduire en croyant réparer
 quelque chose. Deux pages est la contrainte, et ce sont les deux entrées qui
 apportent le moins face à un portefeuille de 33 applications en production.
 
+### Aucune mesure d'une base de code privée (arbitrage du 2026-09-20)
+
+Le dossier d'architecture a publié, du 2026-09-18 au 2026-09-20, huit comptes de
+types relevés dans les dépôts de l'employeur : `ViewController 304`,
+`ViewModel 325`, `UseCase 677`, `Repository 417`, `Protocol 558`… Ils en sont
+retirés, et **ne reviennent pas**.
+
+L'auteur a posé la question lui-même : *« ce sont des metrics de mes projets à
+Instant System non ??? c'est pas confidentiel tout ça ??? »*. Elle a deux
+réponses, et la seconde est la plus importante :
+
+- **un compte de types dit l'échelle d'un produit** — combien de cas d'usage
+  porte le socle, combien de frontières il déclare. Ce produit n'est pas le
+  sien, et le portfolio nomme l'employeur par ailleurs : le rapprochement est
+  immédiat ;
+- **et personne ne peut le vérifier.** Le seul sourcing honnête de « 677 » est
+  « j'ai compté les fichiers dans un dépôt privé » — exactement la phrase qu'on
+  ne veut pas avoir à dire en entretien. Un chiffre qui divulgue *et* qui ne se
+  vérifie pas cumule les deux défauts sans compensation.
+
+**La ligne :** décrire une architecture est du discours professionnel ordinaire
+— « MVVM sur UIKit, la navigation portée par des objets de flux » se dit dans
+n'importe quel entretien. La **quantifier** ne l'est pas.
+
+Les comptes ne sont donc publiables que pour un dépôt **ouvert**, où le lecteur
+recompte lui-même. Ce n'est pas de la discipline :
+`api/tests/resources.test.ts` lie `evidence` à `sourceUrl` et refuse un compte
+sans dépôt public, en nommant le projet fautif.
+
+⚠️ Les huit chiffres restent dans **l'historique git** de `portfolio-api`, qui
+est public et irréversible. Les effacer demanderait une réécriture d'historique
+et un `--force` sur un dépôt public ; vu ce que c'est — des comptes de suffixes
+de types, aucun nom de client, de module ni de réseau — ça n'a pas été fait. La
+décision reste ouverte, et elle appartient à l'auteur.
+
 ### Le « 33 » — vrai, mais à ne pas marteler
 
 Le chiffre reste juste et publiable. Ce qui a été refusé, c'est sa **répétition** :
